@@ -1,20 +1,20 @@
-# CompanyOS Specs
+# CoOS Specs
 
-The public spec catalog for [CompanyOS](https://github.com/Pirol-ai/CompanyOS) — the free,
+The public spec catalog for [CoOS](https://github.com/Pirol-ai/CompanyOS) — the free,
 open-source, AI-first company stack for small service businesses.
 
 Every folder describes one **extension**: what it does, which tables and views it needs, and which
 standard processes it ships. The briefs are plain text on purpose — they are written for two
 readers at once:
 
-1. **You.** Browse the catalog (here, or inside CompanyOS under *Marketplace*), pick a brief, and
-   let the built-in Extend agent build it into your own CompanyOS — on your data, under your roles,
+1. **You.** Browse the catalog (here, or inside CoOS under *Marketplace*), pick a brief, and
+   let the built-in Extend agent build it into your own CoOS — on your data, under your roles,
    in one database with everything else.
 2. **The agent.** A brief is a complete work order: the Extend agent must be able to reach a
    working extension from the text alone. That makes every spec in this repo a living benchmark of
-   what CompanyOS can build for you.
+   what CoOS can build for you.
 
-Briefs are written in the language of their audience (German for the current catalog — CompanyOS
+Briefs are written in the language of their audience (German for the current catalog — CoOS
 serves German-speaking SMBs first). Repository tooling and this README are English.
 
 ## Layout
