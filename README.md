@@ -1,6 +1,6 @@
 # CoOS Specs
 
-The public spec catalog for [CoOS](https://github.com/Pirol-ai/CompanyOS) — the free,
+The public spec catalog for [CoOS](https://www.pirol.ai) — the free,
 open-source, AI-first company stack for small service businesses.
 
 Every folder describes one **extension**: what it does, which tables and views it needs, and which
