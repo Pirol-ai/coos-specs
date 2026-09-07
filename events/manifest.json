@@ -1,0 +1,175 @@
+{
+  "id": "events",
+  "name": "Events",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "events_list",
+      "over": "ext_events_events",
+      "effect": "read-only"
+    },
+    {
+      "op": "query",
+      "name": "registrations_list",
+      "over": "ext_events_registrations",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "registration_create",
+      "over": "ext_events_registrations",
+      "effect": "consequential"
+    },
+    {
+      "op": "insert",
+      "name": "event_create",
+      "over": "ext_events_events",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "events",
+      "query": {
+        "from": "ext_events.events",
+        "join": [],
+        "select": [
+          "ext_events.events.id",
+          "ext_events.events.title",
+          "ext_events.events.event_date",
+          "ext_events.events.location",
+          "ext_events.events.capacity",
+          "ext_events.events.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Events",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    },
+    {
+      "id": "registrations",
+      "query": {
+        "from": "ext_events.registrations",
+        "join": [
+          "ext_events.events on ext_events.events.id = ext_events.registrations.event",
+          "core.organizations on core.organizations.id = ext_events.registrations.company"
+        ],
+        "select": [
+          "ext_events.registrations.id",
+          "ext_events.events.title",
+          "ext_events.registrations.person_name",
+          "core.organizations.name",
+          "ext_events.registrations.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Registrations",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_events",
+  "tables": [
+    {
+      "name": "events",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "event_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "location",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "capacity",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "planned",
+            "open",
+            "full",
+            "past",
+            "cancelled"
+          ],
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "registrations",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "event",
+          "type": "ref",
+          "required": true,
+          "references": "ext_events.events"
+        },
+        {
+          "name": "person_name",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "company",
+          "type": "ref",
+          "required": false,
+          "references": "core.organizations"
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "registered",
+            "confirmed",
+            "cancelled",
+            "attended"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
