@@ -14,8 +14,8 @@ readers at once:
    working extension from the text alone. That makes every spec in this repo a living benchmark of
    what CoOS can build for you.
 
-Briefs are written in the language of their audience (German for the current catalog — CoOS
-serves German-speaking SMBs first). Repository tooling and this README are English.
+Briefs are written in English (founder ruling 2026-09-08); the earlier German entries are being
+migrated. Repository tooling and this README are English.
 
 ## Layout
 
