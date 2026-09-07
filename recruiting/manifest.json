@@ -1,0 +1,160 @@
+{
+  "id": "recruiting",
+  "name": "Recruiting",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "recruiting-pipeline",
+        "runBy": "HR",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Log application",
+            "description": "Create the application record: candidate, position, source, owner. Phase starts as 'received'."
+          },
+          {
+            "type": "task",
+            "title": "Screening",
+            "description": "Review CV and fit against the role profile; set phase to 'screening' and note the first impression."
+          },
+          {
+            "type": "decision",
+            "title": "Screening decision",
+            "description": "Invite to interview or decline. Set phase to 'interview' or 'declined'."
+          },
+          {
+            "type": "task",
+            "title": "Schedule and hold interview",
+            "description": "Agree a date, record it in interview_date, hold the interview and log the impression in the note."
+          },
+          {
+            "type": "approval",
+            "title": "Offer decision",
+            "description": "Decide whether to make an offer; set phase to 'offer' or 'declined'."
+          },
+          {
+            "type": "task",
+            "title": "Make offer and close",
+            "description": "Send the offer, follow up, and set phase to 'hired' or 'declined' once the answer is in."
+          }
+        ],
+        "title": "Recruiting — move applications through the pipeline",
+        "cadence": "Per application",
+        "category": "HR",
+        "description": "Standard process for every incoming application: from received through screening, interview and offer to hired or declined. Ensures no applicant is lost in a mail inbox."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "recruiting_create_application",
+      "over": "ext_recruiting_applications",
+      "effect": "consequential"
+    },
+    {
+      "op": "insert",
+      "name": "recruiting_advance_phase",
+      "over": "ext_recruiting_applications",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "recruiting_query_applications",
+      "over": "ext_recruiting_applications",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "applications",
+      "query": {
+        "from": "ext_recruiting.applications",
+        "join": [],
+        "select": [
+          "ext_recruiting.applications.id",
+          "ext_recruiting.applications.phase",
+          "ext_recruiting.applications.candidate",
+          "ext_recruiting.applications.position",
+          "ext_recruiting.applications.source",
+          "ext_recruiting.applications.interview_date",
+          "ext_recruiting.applications.owner"
+        ],
+        "groupBy": []
+      },
+      "title": "Applications",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_recruiting",
+  "tables": [
+    {
+      "name": "applications",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "candidate",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "position",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "phase",
+          "type": "text",
+          "options": [
+            "received",
+            "screening",
+            "interview",
+            "offer",
+            "hired",
+            "declined"
+          ],
+          "required": false
+        },
+        {
+          "name": "interview_date",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "owner",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}

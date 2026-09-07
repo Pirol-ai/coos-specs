@@ -1,0 +1,108 @@
+{
+  "id": "fleet",
+  "name": "Fleet",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "fleet_query_vehicles",
+      "over": "ext_fleet_vehicles",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "fleet_update_vehicle",
+      "over": "ext_fleet_vehicles",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "vehicles",
+      "query": {
+        "from": "ext_fleet.vehicles",
+        "join": [],
+        "select": [
+          "ext_fleet.vehicles.id",
+          "ext_fleet.vehicles.title",
+          "ext_fleet.vehicles.plate",
+          "ext_fleet.vehicles.driver",
+          "ext_fleet.vehicles.inspection_due",
+          "ext_fleet.vehicles.mileage",
+          "ext_fleet.vehicles.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Vehicles",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_fleet",
+  "tables": [
+    {
+      "name": "vehicles",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "plate",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "driver",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "inspection_due",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "mileage",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "in service",
+            "in workshop",
+            "deregistered"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
