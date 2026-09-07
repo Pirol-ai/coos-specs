@@ -1,0 +1,109 @@
+{
+  "id": "expenses",
+  "name": "Expenses",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "expenses_create",
+      "over": "ext_expenses_expenses",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "expenses_query",
+      "over": "ext_expenses_expenses",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "expenses",
+      "query": {
+        "from": "ext_expenses.expenses",
+        "join": [],
+        "select": [
+          "ext_expenses.expenses.id",
+          "ext_expenses.expenses.title",
+          "ext_expenses.expenses.expense_date",
+          "ext_expenses.expenses.amount",
+          "ext_expenses.expenses.category",
+          "ext_expenses.expenses.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Expenses",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_expenses",
+  "tables": [
+    {
+      "name": "expenses",
+      "access": {
+        "scope": "own",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "expense_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "options": [
+            "travel",
+            "meals",
+            "materials",
+            "software",
+            "other"
+          ],
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "submitted",
+            "approved",
+            "rejected",
+            "reimbursed"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}

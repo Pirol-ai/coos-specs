@@ -1,0 +1,97 @@
+{
+  "id": "budgets",
+  "name": "Budgets",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "budgets_query",
+      "over": "ext_budgets_budget_lines",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "budgets_update_spent",
+      "over": "ext_budgets_budget_lines",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "budget_lines",
+      "query": {
+        "from": "ext_budgets.budget_lines",
+        "join": [],
+        "select": [
+          "ext_budgets.budget_lines.id",
+          "ext_budgets.budget_lines.title",
+          "ext_budgets.budget_lines.year",
+          "ext_budgets.budget_lines.planned",
+          "ext_budgets.budget_lines.spent",
+          "ext_budgets.budget_lines.owner"
+        ],
+        "groupBy": []
+      },
+      "title": "Budget lines",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_budgets",
+  "tables": [
+    {
+      "name": "budget_lines",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "year",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "planned",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "spent",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "owner",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
