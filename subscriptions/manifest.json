@@ -1,0 +1,129 @@
+{
+  "id": "subscriptions",
+  "name": "Subscriptions",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "subscriptions_contracts_query",
+      "over": "ext_subscriptions_contracts",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "subscriptions_contract_create",
+      "over": "ext_subscriptions_contracts",
+      "effect": "consequential"
+    },
+    {
+      "op": "insert",
+      "name": "subscriptions_contract_cancel",
+      "over": "ext_subscriptions_contracts",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "contracts",
+      "query": {
+        "from": "ext_subscriptions.contracts",
+        "join": [],
+        "select": [
+          "ext_subscriptions.contracts.id",
+          "ext_subscriptions.contracts.title",
+          "ext_subscriptions.contracts.partner",
+          "ext_subscriptions.contracts.amount",
+          "ext_subscriptions.contracts.interval",
+          "ext_subscriptions.contracts.direction",
+          "ext_subscriptions.contracts.end_date",
+          "ext_subscriptions.contracts.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Contracts",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_subscriptions",
+  "tables": [
+    {
+      "name": "contracts",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "partner",
+          "type": "ref",
+          "required": false,
+          "references": "core.organizations"
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "interval",
+          "type": "text",
+          "options": [
+            "monthly",
+            "quarterly",
+            "yearly"
+          ],
+          "required": false
+        },
+        {
+          "name": "direction",
+          "type": "text",
+          "options": [
+            "income",
+            "cost"
+          ],
+          "required": false
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "notice_weeks",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "active",
+            "cancelled",
+            "ended"
+          ],
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
