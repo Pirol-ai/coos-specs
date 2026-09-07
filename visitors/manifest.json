@@ -1,0 +1,103 @@
+{
+  "id": "visitors",
+  "name": "Visitors",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "visitors_log_visit",
+      "over": "ext_visitors_visits",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "visitors_query_visits",
+      "over": "ext_visitors_visits",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "visits",
+      "query": {
+        "from": "ext_visitors.visits",
+        "join": [],
+        "select": [
+          "ext_visitors.visits.id",
+          "ext_visitors.visits.visitor",
+          "ext_visitors.visits.company",
+          "ext_visitors.visits.host",
+          "ext_visitors.visits.visit_date",
+          "ext_visitors.visits.checked_in",
+          "ext_visitors.visits.checked_out"
+        ],
+        "groupBy": []
+      },
+      "title": "Visits",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_visitors",
+  "tables": [
+    {
+      "name": "visits",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "visitor",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "company",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "host",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "visit_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "checked_in",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "checked_out",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}

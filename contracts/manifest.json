@@ -1,0 +1,120 @@
+{
+  "id": "contract-register",
+  "name": "Contract register",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "contract_register_query",
+      "over": "ext_contract_register_contract_register",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "contract_register_create",
+      "over": "ext_contract_register_contract_register",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "contracts",
+      "query": {
+        "from": "ext_contract_register.contract_register",
+        "join": [],
+        "select": [
+          "ext_contract_register.contract_register.id",
+          "ext_contract_register.contract_register.title",
+          "ext_contract_register.contract_register.partner",
+          "ext_contract_register.contract_register.kind",
+          "ext_contract_register.contract_register.end_date",
+          "ext_contract_register.contract_register.notice_weeks",
+          "ext_contract_register.contract_register.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Contracts",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_contract_register",
+  "tables": [
+    {
+      "name": "contract_register",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "partner",
+          "type": "ref",
+          "required": false,
+          "references": "core.organizations"
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "options": [
+            "rent",
+            "leasing",
+            "insurance",
+            "framework",
+            "other"
+          ],
+          "required": false
+        },
+        {
+          "name": "start_date",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "end_date",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "notice_weeks",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "active",
+            "cancelled",
+            "ended"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
