@@ -1,0 +1,96 @@
+{
+  "id": "inventory",
+  "name": "Inventory",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "inventory_stock_query",
+      "over": "ext_inventory_stock",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "inventory_stock_adjust",
+      "over": "ext_inventory_stock",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "stock",
+      "query": {
+        "from": "ext_inventory.stock",
+        "join": [],
+        "select": [
+          "ext_inventory.stock.id",
+          "ext_inventory.stock.title",
+          "ext_inventory.stock.location",
+          "ext_inventory.stock.quantity",
+          "ext_inventory.stock.unit",
+          "ext_inventory.stock.min_quantity"
+        ],
+        "groupBy": []
+      },
+      "title": "Stock",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_inventory",
+  "tables": [
+    {
+      "name": "stock",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "location",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "quantity",
+          "type": "number",
+          "required": true
+        },
+        {
+          "name": "unit",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "min_quantity",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
