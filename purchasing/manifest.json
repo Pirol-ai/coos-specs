@@ -1,0 +1,109 @@
+{
+  "id": "purchasing",
+  "name": "Purchasing",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "purchasing_orders_create",
+      "over": "ext_purchasing_orders",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "purchasing_orders_query",
+      "over": "ext_purchasing_orders",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "orders",
+      "query": {
+        "from": "ext_purchasing.orders",
+        "join": [],
+        "select": [
+          "ext_purchasing.orders.id",
+          "ext_purchasing.orders.title",
+          "ext_purchasing.orders.supplier",
+          "ext_purchasing.orders.amount",
+          "ext_purchasing.orders.order_date",
+          "ext_purchasing.orders.expected",
+          "ext_purchasing.orders.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Orders",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_purchasing",
+  "tables": [
+    {
+      "name": "orders",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "supplier",
+          "type": "ref",
+          "required": true,
+          "references": "core.organizations"
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "order_date",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "expected",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "requested",
+            "ordered",
+            "delivered",
+            "cancelled"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
