@@ -1,0 +1,140 @@
+{
+  "id": "maintenance",
+  "name": "Maintenance",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "perform-machine-service",
+        "runBy": "Responsible person",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Align the service date with the responsible person"
+          },
+          {
+            "type": "task",
+            "title": "Take the machine out of operation and secure it"
+          },
+          {
+            "type": "task",
+            "title": "Perform the service per manufacturer spec and note findings"
+          },
+          {
+            "type": "task",
+            "title": "Put the machine back into operation and verify function"
+          },
+          {
+            "type": "task",
+            "title": "Record the service date on the machine and set the next due date"
+          }
+        ],
+        "title": "Perform machine service",
+        "cadence": "Per service interval",
+        "category": "Operations",
+        "description": "Standard flow of a planned machine service."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "machines_query",
+      "over": "ext_maintenance_machines",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "machines_service_update",
+      "over": "ext_maintenance_machines",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "machines",
+      "query": {
+        "from": "ext_maintenance.machines",
+        "join": [],
+        "select": [
+          "ext_maintenance.machines.id",
+          "ext_maintenance.machines.title",
+          "ext_maintenance.machines.responsible",
+          "ext_maintenance.machines.last_service",
+          "ext_maintenance.machines.next_service",
+          "ext_maintenance.machines.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Machines",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_maintenance",
+  "tables": [
+    {
+      "name": "machines",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "serial",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "responsible",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "last_service",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "next_service",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "interval_months",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "In operation",
+            "In maintenance",
+            "Retired"
+          ],
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
