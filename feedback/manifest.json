@@ -1,0 +1,108 @@
+{
+  "id": "customer-feedback",
+  "name": "Customer Feedback",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "customer_feedback_create",
+      "over": "ext_customer_feedback_feedback",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "customer_feedback_query",
+      "over": "ext_customer_feedback_feedback",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "feedback",
+      "query": {
+        "from": "ext_customer_feedback.feedback",
+        "join": [],
+        "select": [
+          "ext_customer_feedback.feedback.id",
+          "ext_customer_feedback.feedback.customer",
+          "ext_customer_feedback.feedback.received",
+          "ext_customer_feedback.feedback.rating",
+          "ext_customer_feedback.feedback.source",
+          "ext_customer_feedback.feedback.follow_up"
+        ],
+        "groupBy": []
+      },
+      "title": "Feedback",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_customer_feedback",
+  "tables": [
+    {
+      "name": "feedback",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "customer",
+          "type": "ref",
+          "required": true,
+          "references": "core.organizations"
+        },
+        {
+          "name": "received",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "rating",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "source",
+          "type": "text",
+          "options": [
+            "Phone",
+            "Email",
+            "Meeting",
+            "Survey"
+          ],
+          "required": false
+        },
+        {
+          "name": "text",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "follow_up",
+          "type": "text",
+          "options": [
+            "needed",
+            "done",
+            "not needed"
+          ],
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
