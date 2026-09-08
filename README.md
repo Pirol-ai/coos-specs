@@ -3,7 +3,7 @@
 The public spec catalog for [CoOS](https://www.pirol.ai) — the free,
 open-source, AI-first company stack for small service businesses.
 
-Every folder describes one **extension**: what it does, which tables and views it needs, and which
+Extensions live in category folders (finance, sales, supply-chain, hr, marketing, services, productivity). Every extension folder describes one **extension**: what it does, which tables and views it needs, and which
 standard processes it ships. The briefs are plain text on purpose — they are written for two
 readers at once:
 
@@ -20,7 +20,7 @@ are English.
 ## Layout
 
 ```
-<extension-id>/
+<category>/<extension-id>/
   <extension-id>.spec   the brief: what to build, in prose
   manifest.json         the exact spec the Extend agent built from the brief (the model solution)
   preview.png/.gif      the built app on demo data
