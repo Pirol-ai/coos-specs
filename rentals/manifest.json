@@ -1,0 +1,175 @@
+{
+  "id": "rentals",
+  "name": "Rentals",
+  "seeds": {
+    "processes": []
+  },
+  "tools": [
+    {
+      "op": "query",
+      "name": "rentals_items_query",
+      "over": "ext_rentals_items",
+      "effect": "read-only"
+    },
+    {
+      "op": "query",
+      "name": "rentals_loans_query",
+      "over": "ext_rentals_loans",
+      "effect": "read-only"
+    },
+    {
+      "op": "insert",
+      "name": "rentals_loan_create",
+      "over": "ext_rentals_loans",
+      "effect": "consequential"
+    },
+    {
+      "op": "insert",
+      "name": "rentals_item_create",
+      "over": "ext_rentals_items",
+      "effect": "consequential"
+    }
+  ],
+  "views": [
+    {
+      "id": "items",
+      "query": {
+        "from": "ext_rentals.items",
+        "join": [],
+        "select": [
+          "ext_rentals.items.id",
+          "ext_rentals.items.title",
+          "ext_rentals.items.category",
+          "ext_rentals.items.daily_rate",
+          "ext_rentals.items.deposit"
+        ],
+        "groupBy": []
+      },
+      "title": "Items",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    },
+    {
+      "id": "loans",
+      "query": {
+        "from": "ext_rentals.loans",
+        "join": [],
+        "select": [
+          "ext_rentals.loans.id",
+          "ext_rentals.loans.item",
+          "ext_rentals.loans.customer",
+          "ext_rentals.loans.from_date",
+          "ext_rentals.loans.to_date",
+          "ext_rentals.loans.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Loans",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_rentals",
+  "tables": [
+    {
+      "name": "items",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "category",
+          "type": "text",
+          "options": [
+            "tech",
+            "tools",
+            "rooms"
+          ],
+          "required": false
+        },
+        {
+          "name": "daily_rate",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "deposit",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    },
+    {
+      "name": "loans",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "item",
+          "type": "ref",
+          "required": true,
+          "references": "ext_rentals.items"
+        },
+        {
+          "name": "customer",
+          "type": "ref",
+          "required": false,
+          "references": "core.organizations"
+        },
+        {
+          "name": "from_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "to_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "deposit_paid",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "reserved",
+            "out",
+            "returned",
+            "overdue"
+          ],
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": []
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
