@@ -1,0 +1,142 @@
+{
+  "id": "approvals",
+  "name": "Approvals",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "decide-a-request",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Read the request and ask the requester if anything is unclear"
+          },
+          {
+            "type": "decision",
+            "title": "For amounts above 500 euros, get a second opinion"
+          },
+          {
+            "type": "approval",
+            "title": "Decide and set status, decider and date on the request"
+          },
+          {
+            "type": "task",
+            "title": "Inform the requester about the decision"
+          }
+        ],
+        "title": "Decide a request",
+        "category": "Admin",
+        "description": "The path of a request from open to decided"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "approvals_create_request",
+      "over": "ext_approvals_requests",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "approvals_list_requests",
+      "over": "ext_approvals_requests",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "requests",
+      "query": {
+        "from": "ext_approvals.requests",
+        "join": [],
+        "select": [
+          "ext_approvals.requests.id",
+          "ext_approvals.requests.title",
+          "ext_approvals.requests.kind",
+          "ext_approvals.requests.amount",
+          "ext_approvals.requests.status",
+          "ext_approvals.requests.decided_by",
+          "ext_approvals.requests.decided_on",
+          "ext_approvals.requests.note"
+        ],
+        "groupBy": []
+      },
+      "title": "Requests",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_approvals",
+  "tables": [
+    {
+      "name": "requests",
+      "access": {
+        "scope": "own",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "options": [
+            "purchase",
+            "training",
+            "spend",
+            "other"
+          ],
+          "required": false
+        },
+        {
+          "name": "amount",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "open",
+            "approved",
+            "rejected"
+          ],
+          "required": false
+        },
+        {
+          "name": "decided_by",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "decided_on",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
