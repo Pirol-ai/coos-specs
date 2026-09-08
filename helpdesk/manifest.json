@@ -1,0 +1,147 @@
+{
+  "id": "helpdesk",
+  "name": "Helpdesk",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "handle-a-critical-ticket",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Take the ticket, set priority to critical and assign an owner"
+          },
+          {
+            "type": "task",
+            "title": "Call the customer with a status within one hour"
+          },
+          {
+            "type": "task",
+            "title": "Fix the incident or provide a workaround"
+          },
+          {
+            "type": "task",
+            "title": "Document the solution on the ticket and set status to solved"
+          },
+          {
+            "type": "task",
+            "title": "Follow up with the customer after two days"
+          }
+        ],
+        "title": "Handle a critical ticket",
+        "category": "Service",
+        "description": "Standard flow for a critical incident."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "helpdesk_create_ticket",
+      "over": "ext_helpdesk_tickets",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "helpdesk_query_tickets",
+      "over": "ext_helpdesk_tickets",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "tickets",
+      "query": {
+        "from": "ext_helpdesk.tickets",
+        "join": [],
+        "select": [
+          "ext_helpdesk.tickets.id",
+          "ext_helpdesk.tickets.status",
+          "ext_helpdesk.tickets.title",
+          "ext_helpdesk.tickets.customer",
+          "ext_helpdesk.tickets.priority",
+          "ext_helpdesk.tickets.assignee",
+          "ext_helpdesk.tickets.due"
+        ],
+        "groupBy": []
+      },
+      "title": "Tickets",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_helpdesk",
+  "tables": [
+    {
+      "name": "tickets",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "customer",
+          "type": "ref",
+          "required": false,
+          "references": "core.organizations"
+        },
+        {
+          "name": "priority",
+          "type": "text",
+          "options": [
+            "low",
+            "normal",
+            "high",
+            "critical"
+          ],
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "new",
+            "in progress",
+            "waiting on customer",
+            "solved"
+          ],
+          "required": false
+        },
+        {
+          "name": "assignee",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "due",
+          "type": "date",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}

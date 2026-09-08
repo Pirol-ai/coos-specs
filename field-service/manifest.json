@@ -1,0 +1,158 @@
+{
+  "id": "field-service",
+  "name": "Field Service",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "field-service-visit",
+        "runBy": "Dispatch",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Record visit request",
+            "description": "Capture the job, the customer site and the desired date as a new visit (status \"planned\")."
+          },
+          {
+            "type": "task",
+            "title": "Assign technician and date",
+            "description": "Pick the technician who drives and confirm the appointment date with the customer."
+          },
+          {
+            "type": "approval",
+            "title": "Confirm dispatch",
+            "description": "Dispatch approves the plan; address, access details and materials are noted."
+          },
+          {
+            "type": "task",
+            "title": "Travel to site",
+            "description": "Technician sets the visit to \"on the way\" when leaving."
+          },
+          {
+            "type": "task",
+            "title": "Carry out the work on site",
+            "description": "Perform the job at the customer's site."
+          },
+          {
+            "type": "task",
+            "title": "Write report and close",
+            "description": "Record what was done in the report and set the status to \"done\" — or to \"postponed\" with a reason."
+          }
+        ],
+        "title": "Field service visit",
+        "cadence": "Per visit",
+        "category": "Field Service",
+        "description": "Plan, carry out and close an on-site technician visit. Covers dispatch in the office through to the written report after the visit."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "field_service_create_visit",
+      "over": "ext_field_service_visits",
+      "effect": "consequential"
+    },
+    {
+      "op": "insert",
+      "name": "field_service_close_visit",
+      "over": "ext_field_service_visits",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "field_service_query_visits",
+      "over": "ext_field_service_visits",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "visits",
+      "query": {
+        "from": "ext_field_service.visits",
+        "join": [],
+        "select": [
+          "ext_field_service.visits.id",
+          "ext_field_service.visits.title",
+          "ext_field_service.visits.customer",
+          "ext_field_service.visits.technician",
+          "ext_field_service.visits.visit_date",
+          "ext_field_service.visits.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Visits",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_field_service",
+  "tables": [
+    {
+      "name": "visits",
+      "access": {
+        "scope": "tenant",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "customer",
+          "type": "ref",
+          "required": true,
+          "references": "core.organizations"
+        },
+        {
+          "name": "technician",
+          "type": "ref",
+          "required": false,
+          "references": "core.persons"
+        },
+        {
+          "name": "visit_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "planned",
+            "on the way",
+            "done",
+            "postponed"
+          ],
+          "required": false
+        },
+        {
+          "name": "report",
+          "type": "text",
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
