@@ -14,17 +14,17 @@ readers at once:
    working extension from the text alone. That makes every spec in this repo a living benchmark of
    what CoOS can build for you.
 
-Briefs are written in English (founder ruling 2026-09-08); the earlier German entries are being
-migrated. Repository tooling and this README are English.
+Briefs are written in English (founder ruling 2026-09-08). Repository tooling and this README
+are English.
 
 ## Layout
 
 ```
 <extension-id>/
   <extension-id>.spec   the brief: what to build, in prose
+  manifest.json         the exact spec the Extend agent built from the brief (the model solution)
+  preview.png/.gif      the built app on demo data
   process.md            the standard processes this extension ships (become runnable SOPs)
-bundles/
-  <bundle-id>.md        curated sets of extensions for one industry / use case
 ```
 
 Curated, verified model solutions are maintained separately and delivered through the Pirol
