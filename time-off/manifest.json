@@ -1,0 +1,146 @@
+{
+  "id": "time-off",
+  "name": "Time off",
+  "seeds": {
+    "processes": [
+      {
+        "slug": "approve-a-time-off-request",
+        "runBy": "Manager",
+        "steps": [
+          {
+            "type": "task",
+            "title": "Check the request for completeness (period, cover)",
+            "description": "Verify that from/to dates, number of working days and the cover arrangement in the note are complete and plausible."
+          },
+          {
+            "type": "task",
+            "title": "Check team coverage in the period",
+            "description": "Compare with other absences in the same period and confirm the team stays operational."
+          },
+          {
+            "type": "approval",
+            "title": "Decide and set the status on the entry",
+            "description": "Approve or reject the request and set the status field on the absence record accordingly."
+          },
+          {
+            "type": "task",
+            "title": "Inform the requester and put the absence into the team calendar",
+            "description": "Notify the requester of the decision and add the approved absence to the shared team calendar."
+          }
+        ],
+        "title": "Approve a time-off request",
+        "cadence": "On request",
+        "category": "People",
+        "description": "From request to the team calendar. Checks a submitted absence for completeness and coverage, decides it, and communicates the result."
+      }
+    ]
+  },
+  "tools": [
+    {
+      "op": "insert",
+      "name": "time_off_create_absence",
+      "over": "ext_time_off_absences",
+      "effect": "consequential"
+    },
+    {
+      "op": "query",
+      "name": "time_off_query_absences",
+      "over": "ext_time_off_absences",
+      "effect": "read-only"
+    }
+  ],
+  "views": [
+    {
+      "id": "absences",
+      "query": {
+        "from": "ext_time_off.absences",
+        "join": [],
+        "select": [
+          "ext_time_off.absences.id",
+          "ext_time_off.absences.title",
+          "ext_time_off.absences.kind",
+          "ext_time_off.absences.from_date",
+          "ext_time_off.absences.to_date",
+          "ext_time_off.absences.days",
+          "ext_time_off.absences.status"
+        ],
+        "groupBy": []
+      },
+      "title": "Absences",
+      "hidden": false,
+      "widget": "table",
+      "density": "comfortable",
+      "resolve": []
+    }
+  ],
+  "schema": "ext_time_off",
+  "tables": [
+    {
+      "name": "absences",
+      "access": {
+        "scope": "own",
+        "rolesSeed": []
+      },
+      "columns": [
+        {
+          "name": "title",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "kind",
+          "type": "text",
+          "options": [
+            "vacation",
+            "sick",
+            "training",
+            "other"
+          ],
+          "required": false
+        },
+        {
+          "name": "from_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "to_date",
+          "type": "date",
+          "required": true
+        },
+        {
+          "name": "days",
+          "type": "number",
+          "required": false
+        },
+        {
+          "name": "status",
+          "type": "text",
+          "options": [
+            "requested",
+            "approved",
+            "rejected"
+          ],
+          "required": false
+        },
+        {
+          "name": "note",
+          "type": "text",
+          "required": false
+        }
+      ]
+    }
+  ],
+  "version": "0.1.0",
+  "requires": {
+    "apps": [
+      "processes"
+    ]
+  },
+  "contributes": {
+    "tabs": [],
+    "lists": [],
+    "fields": [],
+    "records": []
+  }
+}
