@@ -1,21 +1,22 @@
-# CoOS Specs
+# kyte specs
 
-The public spec catalog for [CoOS](https://www.pirol.ai) — the free,
+The public spec catalog for [kyte](https://www.pirol.ai) — the free,
 open-source, AI-first company stack for small service businesses.
 
 Extensions live in category folders (finance, sales, supply-chain, hr, marketing, services, productivity). Every extension folder describes one **extension**: what it does, which tables and views it needs, and which
 standard processes it ships. The briefs are plain text on purpose — they are written for two
 readers at once:
 
-1. **You.** Browse the catalog (here, or inside CoOS under *Marketplace*), pick a brief, and
-   let the built-in Extend agent build it into your own CoOS — on your data, under your roles,
+1. **You.** Browse the catalog (here, or inside kyte under *Marketplace*), pick a brief, and
+   let the built-in Extend agent build it into your own kyte — on your data, under your roles,
    in one database with everything else.
 2. **The agent.** A brief is a complete work order: the Extend agent must be able to reach a
    working extension from the text alone. That makes every spec in this repo a living benchmark of
-   what CoOS can build for you.
+   what kyte can build for you.
 
 Briefs are written in English (founder ruling 2026-09-08). Repository tooling and this README
-are English.
+are English. The product was renamed from CoOS to kyte on 2026-09-10; the repository keeps its
+technical name `coos-specs` until the step-2 identifier rename.
 
 ## Layout
 

@@ -1,6 +1,6 @@
-# Set CoOS up with me
+# Set kyte up with me
 
-You are helping me put my company into CoOS for the first time. Work through this with me in the
+You are helping me put my company into kyte for the first time. Work through this with me in the
 chat — one small step at a time. This is a conversation, not a form.
 
 ## How I want you to work
@@ -20,7 +20,7 @@ Before you greet me, draft a todo list for this setup: the steps below, plus wha
 later. Keep it in this conversation for now — I have not given you a folder yet, so there is nowhere
 to put it.
 
-The moment I attach a working folder, write the list to `CoOS/onboarding.md` inside it and keep it
+The moment I attach a working folder, write the list to `kyte/onboarding.md` inside it and keep it
 current: tick off what is done, add what we discover, note what I postponed. That file is my proof
 that this went somewhere, and where we pick up next time.
 
@@ -42,7 +42,7 @@ from files) and carry on.
 ## 3. Me and my company
 
 - What we do, in my own words.
-- How many people, and which of them will use CoOS.
+- How many people, and which of them will use kyte.
 - What my role is.
 
 Do not turn this into an interview. Three questions, then move.
@@ -91,13 +91,13 @@ One of them, all the way through. Not both, halfway.
 
 ## 8. Our documents
 
-Ask where our documents already live — a network drive, a folder, a shared mailbox. Point CoOS at it
+Ask where our documents already live — a network drive, a folder, a shared mailbox. Point kyte at it
 so you can find things instead of asking me. Say what you may read, and what you will never touch.
 
 ## 9. Close, and say what is next
 
 - Update the todo list in the folder: done, open, postponed.
-- Tell me in three sentences what my CoOS can do now that it could not this morning.
+- Tell me in three sentences what my kyte can do now that it could not this morning.
 - Tell me how to continue: this chat stays, I can just keep talking to you; longer jobs I can start
   with `/parallel` and let run in the background.
 - Then ask me one question: what should we do next time?
